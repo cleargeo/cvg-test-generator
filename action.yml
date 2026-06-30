@@ -1,0 +1,29 @@
+name: 'CVG Test Generator'
+description: 'Autonomous test case generation powered by 600+ CVG skills'
+inputs:
+  github-token:
+    description: 'GitHub token for PR creation'
+    required: false
+    default: ${{ github.token }}
+  target-path:
+    description: 'Path to source code'
+    required: false
+    default: '.'
+  language:
+    description: 'Programming language (python, rust, typescript)'
+    required: false
+    default: 'auto'
+  test-type:
+    description: 'Test type (unit, integration, e2e)'
+    required: false
+    default: 'unit'
+  coverage-target:
+    description: 'Target coverage percentage'
+    required: false
+    default: '80'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - '-target-path'
+    - ${{ inputs.target-path }}
