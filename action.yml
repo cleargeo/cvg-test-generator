@@ -1,16 +1,21 @@
 name: 'CVG Test Generator'
 description: 'Autonomous test case generation powered by 600+ CVG skills'
+author: 'CVG Hive <hive@clearviewgeo.tech>'
+branding:
+  icon: 'test-tube'
+  color: 'blue'
+
 inputs:
   github-token:
     description: 'GitHub token for PR creation'
     required: false
     default: ${{ github.token }}
   target-path:
-    description: 'Path to source code'
+    description: 'Path to source code to generate tests for'
     required: false
     default: '.'
   language:
-    description: 'Programming language (python, rust, typescript)'
+    description: 'Programming language (python, rust, typescript, go, java, auto)'
     required: false
     default: 'auto'
   test-type:
@@ -21,9 +26,38 @@ inputs:
     description: 'Target coverage percentage'
     required: false
     default: '80'
+  create-pr:
+    description: 'Create PR with generated tests'
+    required: false
+    default: 'true'
+  pr-title:
+    description: 'Custom PR title'
+    required: false
+    default: '[CVG] Add generated tests'
+
+outputs:
+  tests-generated:
+    description: 'Number of tests generated'
+    value: ${{ steps.generate.outputs.tests-generated }}
+  pr-url:
+    description: 'URL of created PR'
+    value: ${{ steps.pr.outputs.pr-url }}
+
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - '-target-path'
     - ${{ inputs.target-path }}
+    - '-language'
+    - ${{ inputs.language }}
+    - '-test-type'
+    - ${{ inputs.test-type }}
+    - '-coverage'
+    - ${{ inputs.coverage-target }}
+    - '-create-pr'
+    - ${{ inputs.create-pr }}
+    - '-pr-title'
+    - ${{ inputs.pr-title }}
+    - '-github-token'
+    - ${{ inputs.github-token }}
