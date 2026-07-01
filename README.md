@@ -133,4 +133,3 @@ MIT - Free for commercial and open source use.
 - Issues: <https://github.com/cleargeo/cvg-test-generator/issues>
 - Email: <azelenski@clearviewgeographic.com> or <support@clearviewgeographic.com>
 - Docs: <https://github.com/cleargeo/cvg-test-generator/wiki>
-
